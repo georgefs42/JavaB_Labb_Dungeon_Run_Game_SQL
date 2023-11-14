@@ -1,0 +1,52 @@
+Creating a Java game "Dungeon Run":
+
+1. **Design Your Classes:**
+   - Create the necessary classes, as mentioned in your requirements: `Player`, `Monster`, and an `ICombat` interface.
+
+2. **Use Object-Oriented Programming (OOP):**
+   - Ensure that your classes adhere to OOP principles like abstraction, encapsulation, inheritance, and polymorphism. Design your classes with clear responsibilities and relationships.
+
+3. **Define Class Variables:**
+   - Define variables for each class based on your game's requirements. For the `Player` class, this includes `strength`, `intelligence`, `agility`, `health`, `experience`, `level`, `baseDamage`, and possibly `gold`. For the `Monster` class, variables might include `health`, `strength`, and `reward`.
+
+4. **Implement Player Methods:**
+   - Create methods in the `Player` class for actions like `levelUp()`, `act()`, `flee()`, `attack()`, `getStatus()`, `calculateDamage()`, and `didDodge()`. These methods should encapsulate the logic for the player's interactions in the game.
+
+5. **Implement Monster Methods:**
+   - Implement methods for the `Monster` class, such as `attack()`, `generateMonsterList()`, and any other methods required for game mechanics.
+
+6. **Interface for Combat:**
+   - Define the `ICombat` interface with methods like `fight()` to ensure that both `Player` and `Monster` classes implement the necessary combat methods.
+
+7. **Unit Testing:**
+   - Create unit tests for your classes. Test cases should cover scenarios such as leveling up, losing a fight, and ensuring that damage calculations are accurate.
+
+8. **Error Handling:**
+   - Implement error handling to ensure that the game doesn't crash during gameplay. Use try-catch blocks to catch exceptions and provide meaningful error messages.
+
+9. **Game Flow:**
+   - Implement the game's main loop. Create a menu system where players can choose to fight a monster, check their status, finish the game, or visit a shop (if you decide to implement it).
+
+10. **Randomness and Probability:**
+    - Use random number generators for various game mechanics like dodging, monster encounters, and rewards. Randomness adds unpredictability and excitement to the game.
+
+11. **Persistence:**
+    - Consider saving and loading game progress. This allows players to continue their game later.
+
+12. **User Input:**
+    - Use Java's `Scanner` class to receive user input for menu choices and actions during the game.
+
+13. **Graphics and User Interface (Optional):**
+    - If you want to enhance the game, you can add a graphical user interface (GUI) using libraries like JavaFX.
+
+14. **Documentation:**
+    - Document your code thoroughly with comments and create a user manual or in-game instructions to guide players.
+
+15. **Playtesting:**
+    - Test the game extensively to ensure that it's fun, balanced, and free of major bugs.
+
+16. **Scalability:**
+    - Design your codebase in a way that makes it easy to add new features, such as additional monsters, items, or quests in the future.
+
+17. **Refinement:**
+    - Continuously refine and improve the game based on feedback from players and your own observations.
