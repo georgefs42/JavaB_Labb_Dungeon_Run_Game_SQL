@@ -1,9 +1,10 @@
+// Player class
 package com.george.java_b_labb;
 
 import java.util.Random;
 import java.util.Scanner;
 
-public class Player {
+public class Player implements Combatant {
     public String name;
     public int strength;
     public int intelligence;
@@ -27,6 +28,7 @@ public class Player {
         this.gold = 0;
     }
 
+
     // Player's actions menu
     public void act() {
         Scanner scanner = new Scanner(System.in);
@@ -44,10 +46,30 @@ public class Player {
         }
     }
 
+    private void attack() {
+    }
+
+
     // Player attacks
-    public void attack() {
+    @Override
+    public void attack(Combatant target) {
         int damage = calculateDamage();
         System.out.println(name + " attacks for " + damage + " damage.");
+        if (target != null) {
+            target.takeDamage(damage);
+        }
+    }
+
+    // Player takes damage
+    @Override
+    public void takeDamage(int damage) {
+        health -= damage;
+        if (health <= 0) {
+            System.out.println(name + " has been defeated!");
+            // Additional logic for handling player defeat can be added here
+        } else {
+            System.out.println(name + " takes " + damage + " damage. Remaining health: " + health);
+        }
     }
 
     // Player attempts to flee from battle
@@ -58,7 +80,7 @@ public class Player {
             System.out.println(name + " successfully flees from the battle.");
         } else {
             System.out.println(name + " failed to flee.");
-            attack();
+            attack(null);
         }
     }
 

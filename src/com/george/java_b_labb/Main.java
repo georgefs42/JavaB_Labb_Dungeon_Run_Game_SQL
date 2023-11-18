@@ -1,11 +1,12 @@
+// Main class
 package com.george.java_b_labb;
 
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
+    public static void main(String[] args) {
         // Welcome message and game information
         System.out.println(Colors.BLUE_BOLD + "========================================");
         System.out.println(" Hello and welcome to my Java_B project");
@@ -22,6 +23,9 @@ public class Main {
         System.out.println(Colors.PURPLE_BOLD + "\nHello " + playerName + "! \nPlease choose a number to start the game: \n" + Colors.RESET);
 
         while (true) {
+            // Invoke the act method to get the player's action
+            player.act();
+
             // Main menu options
             System.out.println(Colors.RED_BACKGROUND + "1. Fight a monster" + Colors.RESET);
             System.out.println(Colors.WHITE_BACKGROUND + "2. Status" + Colors.RESET);
@@ -29,9 +33,9 @@ public class Main {
             int choice = scanner.nextInt();
 
             if (choice == 1) {
-                // Create a Goblin monster and initiate the player's actions
-                Monster monster = new Monster("Goblin", 50, 8);
-                player.act();
+                // Create a Goblin monster and initiate the combat
+                Combatant monster = new Monster("Goblin", 50, 8);
+                player.attack(monster);
                 monster.attack(player);
             } else if (choice == 2) {
                 // Display player's status
