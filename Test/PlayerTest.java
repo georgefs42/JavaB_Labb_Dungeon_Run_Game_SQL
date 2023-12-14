@@ -1,4 +1,4 @@
-import com.george.java_b_labb.Player;
+package com.george.java_b_labb;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,11 +7,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
     private Player player;
+    private MariaDBConnector dbConnector;
 
     @BeforeEach
     void setUp() {
-        //Create a new Player object before each test method
-        player = new Player("TestPlayer");
+        // Create a new Player object and a mock MariaDBConnector before each test method
+        dbConnector = new MariaDBConnector();
+        player = new Player("TestPlayer", dbConnector);
     }
 
     @Test

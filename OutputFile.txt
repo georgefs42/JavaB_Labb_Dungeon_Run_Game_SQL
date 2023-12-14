@@ -1,0 +1,8 @@
+Player Name: George
+Level: 1
+Strength: 10
+Intelligence: 5
+Agility: 5
+Health: 84
+Experience: 60
+Gold: 0

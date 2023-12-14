@@ -1,4 +1,3 @@
-// Monster class
 package com.george.java_b_labb;
 
 public class Monster implements Combatant {
@@ -6,15 +5,28 @@ public class Monster implements Combatant {
     public int health;
     public int strength;
 
-    // Constructor to initialize the monster
-    public Monster(String name, int health, int strength) {
+    private MariaDBConnector dbConnector;
+
+    // Constructor with initialization of monster attributes
+    public Monster(String name, int health, int strength, MariaDBConnector dbConnector) {
         this.name = name;
         this.health = health;
         this.strength = strength;
+        this.dbConnector = dbConnector;
     }
 
-    // Monster attacks the target (Combatant)
-    @Override
+    // Get and store the status data
+    public void getStatus(OutputFile outputFile) {
+        String monsterStatus = getMonsterStatusAsString();
+        System.out.println(Colors.PURPLE_BACKGROUND + "=================================");
+        System.out.println(monsterStatus);
+        System.out.println("=================================\n" + Colors.RESET);
+
+        outputFile.getStatus(monsterStatus);
+        writeStatusToDatabase(monsterStatus);
+    }
+
+    // Monster attacks the target
     public void attack(Combatant target) {
         int damage = calculateDamage();
         System.out.println(name + " attacks for " + damage + " damage.");
@@ -24,23 +36,29 @@ public class Monster implements Combatant {
     }
 
     // Monster takes damage
-    @Override
     public void takeDamage(int damage) {
         health -= damage;
         if (health <= 0) {
             System.out.println(name + " has been defeated!");
-            // Additional logic for handling monster defeat can be added here
         } else {
             System.out.println(name + " takes " + damage + " damage. Remaining health: " + health);
         }
     }
 
     // Calculate damage dealt by the monster
-    @Override
     public int calculateDamage() {
         return strength;
     }
 
-    public void attack() {
+    // Write monster status to the database
+    private void writeStatusToDatabase(String status) {
+        dbConnector.open();
+        dbConnector.writeToFile(status);
+    }
+
+    // Convert monster status to a formatted string
+    private String getMonsterStatusAsString() {
+        // Implement if needed
+        return "";
     }
 }

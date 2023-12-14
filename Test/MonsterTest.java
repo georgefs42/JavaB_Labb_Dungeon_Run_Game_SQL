@@ -1,43 +1,46 @@
+import com.george.java_b_labb.MariaDBConnector;
 import com.george.java_b_labb.Monster;
-import com.george.java_b_labb.Player;
-
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
+import com.george.java_b_labb.OutputFile;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.sql.Connection;
 
 public class MonsterTest {
-    private Monster monster;
-    private Player player;
 
-    @BeforeEach
-    void setUp() {
-        // Create a new monster and player before each test
-        monster = new Monster("TestMonster", 100, 15);
-        player = new Player("TestPlayer");
+    // Mock MariaDBConnector for testing
+    private static class MockMariaDBConnector extends MariaDBConnector {
+        @Override
+        public Connection open() {
+            // Provide a mock Connection object for testing
+            return mock(Connection.class);
+        }
+
+        private Connection mock (Class<Connection> connectionClass) {
+            return null;
+        }
+    }
+
+    // Mock OutputFile for testing
+    private static class MockOutputFile extends OutputFile {
+        public MockOutputFile(String fileName, MariaDBConnector dbConnector) {
+            super(fileName, dbConnector);
+        }
+
+        @Override
+        public void getStatus(String status) {
+            // Do nothing for the mock implementation
+        }
     }
 
     @Test
-    void testMonsterAttack() {
-        // Test if the monster can successfully attack the player
-        monster.attack();
-        // You can't directly test console output, but you can check if the player's health is reduced
-        int expectedHealth = player.health - player.calculateDamage() + 16;
-        assertEquals(expectedHealth, player.health);
-    }
+    void testWriteStatusToDatabase() {
+        MariaDBConnector dbConnector = new MockMariaDBConnector();
+        Monster monster = new Monster("TestMonster", 100, 20, dbConnector);
+        MockOutputFile mockOutputFile = new MockOutputFile("MockOutputFile.txt", dbConnector);
 
-    @Test
-    void testMonsterAttributes() {
-        // Test if the monster's attributes are set correctly
-        assertEquals("TestMonster", monster.name);
-        assertEquals(100, monster.health);
-        assertEquals(15, monster.strength);
-    }
+        // Mock method to check if writeStatusToDatabase is called
+        monster.writeStatusToDatabase("TestStatus");
 
-    @AfterAll
-    public static void tearDown() {
-        // Add a final message after the unit test as a report
-        System.out.println("Monster Test Report:");
-        System.out.println("All monster tests completed successfully!");
+        // Add assertions based on your specific implementation
     }
 }

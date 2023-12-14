@@ -1,4 +1,3 @@
-// Player class
 package com.george.java_b_labb;
 
 import java.util.Random;
@@ -15,8 +14,10 @@ public class Player implements Combatant {
     public int baseDamage;
     public int gold;
 
-    // Constructor to initialize the player
-    public Player(String name) {
+    private MariaDBConnector dbConnector;
+
+    // Constructor with initialization of player attributes
+    public Player(String name, MariaDBConnector dbConnector) {
         this.name = name;
         this.strength = 10;
         this.intelligence = 5;
@@ -26,10 +27,10 @@ public class Player implements Combatant {
         this.level = 1;
         this.baseDamage = 10;
         this.gold = 0;
+        this.dbConnector = dbConnector;
     }
 
-
-    // Player's actions menu
+    // Player's action menu
     public void act() {
         Scanner scanner = new Scanner(System.in);
 
@@ -46,12 +47,10 @@ public class Player implements Combatant {
         }
     }
 
-    private void attack() {
+    private void attack () {
     }
 
-
-    // Player attacks
-    @Override
+    // Player attacks the target
     public void attack(Combatant target) {
         int damage = calculateDamage();
         System.out.println(name + " attacks for " + damage + " damage.");
@@ -61,12 +60,10 @@ public class Player implements Combatant {
     }
 
     // Player takes damage
-    @Override
     public void takeDamage(int damage) {
         health -= damage;
         if (health <= 0) {
             System.out.println(name + " has been defeated!");
-            // Additional logic for handling player defeat can be added here
         } else {
             System.out.println(name + " takes " + damage + " damage. Remaining health: " + health);
         }
@@ -86,16 +83,12 @@ public class Player implements Combatant {
 
     // Display player's status
     public void getStatus() {
+        String playerStatus = getPlayerStatusAsString();
         System.out.println(Colors.PURPLE_BACKGROUND + "=================================");
-        System.out.println("Player Name: " + name);
-        System.out.println("Level: " + level);
-        System.out.println("Strength: " + strength);
-        System.out.println("Intelligence: " + intelligence);
-        System.out.println("Agility: " + agility);
-        System.out.println("Health: " + health);
-        System.out.println("Experience: " + experience);
-        System.out.println("Gold: " + gold);
+        System.out.println(playerStatus);
         System.out.println("=================================\n" + Colors.RESET);
+
+        writeStatusToDatabase(playerStatus);
     }
 
     // Gain experience points
@@ -115,5 +108,27 @@ public class Player implements Combatant {
     // Calculate damage dealt by the player
     public int calculateDamage() {
         return baseDamage + (strength * 2 / 4 + 1);
+    }
+
+    // Write player status to the database
+    private void writeStatusToDatabase(String status) {
+        dbConnector.open();
+        dbConnector.writeToFile(status);
+    }
+
+    // Convert player status to a formatted string
+    private String getPlayerStatusAsString() {
+        StringBuilder status = new StringBuilder();
+        status.append("Player Name: ").append(name).append("\n");
+        status.append("Level: ").append(level).append("\n");
+        status.append("Strength: ").append(strength).append("\n");
+        status.append("Intelligence: ").append(intelligence).append("\n");
+        status.append("Agility: ").append(agility).append("\n");
+        status.append("Health: ").append(health).append("\n");
+        status.append("Experience: ").append(experience).append("\n");
+        status.append("Gold: ").append(gold).append("\n");
+        // Add other player status information...
+
+        return status.toString();
     }
 }
