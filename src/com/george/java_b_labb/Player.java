@@ -113,7 +113,7 @@ public class Player implements Combatant {
     // Write player status to the database
     private void writeStatusToDatabase(String status) {
         dbConnector.open();
-        dbConnector.writeToFile(status);
+        dbConnector.writeToPlayer(name, strength, intelligence, agility, health, experience, level, baseDamage, gold);
     }
 
     // Convert player status to a formatted string

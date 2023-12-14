@@ -4,8 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class OutputFile {
-    private String fileName;
-    private MariaDBConnector dbConnector;
+    private final String fileName;
+    private final MariaDBConnector dbConnector;
 
     // Constructor with initialization of the database
     public OutputFile(String fileName, MariaDBConnector dbConnector) {
@@ -29,12 +29,11 @@ public class OutputFile {
 
     // Get and store the status data
     public void getStatus(String status) {
-        writeToFile(status);
+        dbConnector.writeToPlayer(status);
     }
 
     // Write status data to both the database and a file
-    private void writeToFile(String data) {
-        dbConnector.writeToFile(data);
-        // Write to the file (your existing file writing logic)
-    }
+    private void writeToPlayer(String data) {
+        dbConnector.writeToPlayer(data);
+}
 }

@@ -17,7 +17,7 @@ public class Main {
         String playerName = scanner.nextLine();
         Player player = new Player(playerName, dbConnector);
 
-        OutputFile outputFile = new OutputFile("OutputFile.txt", dbConnector);
+       // OutputFile outputFile = new OutputFile("OutputFile.txt", dbConnector);
 
         while (true) {
             player.act();
