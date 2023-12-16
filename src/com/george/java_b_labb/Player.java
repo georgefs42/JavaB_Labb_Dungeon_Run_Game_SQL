@@ -3,16 +3,16 @@ package com.george.java_b_labb;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Player implements Combatant {
-    public String name;
-    public int strength;
-    public int intelligence;
-    public int agility;
-    public int health;
-    public int experience;
-    public int level;
-    public int baseDamage;
-    public int gold;
+public abstract class Player implements Combatant {
+    protected String name;
+    protected int strength;
+    protected int intelligence;
+    protected int agility;
+    protected int health;
+    protected int experience;
+    protected int level;
+    protected int baseDamage;
+    protected int gold;
 
     private MariaDBConnector dbConnector;
 
@@ -47,16 +47,9 @@ public class Player implements Combatant {
         }
     }
 
-    private void attack () {
-    }
-
     // Player attacks the target
-    public void attack(Combatant target) {
-        int damage = calculateDamage();
-        System.out.println(name + " attacks for " + damage + " damage.");
-        if (target != null) {
-            target.takeDamage(damage);
-        }
+    public void attack() {
+        // Implement attack logic here...
     }
 
     // Player takes damage
@@ -94,10 +87,11 @@ public class Player implements Combatant {
     // Gain experience points
     public void gainExperience(int amount) {
         experience += amount;
+        levelUp(); // Check for level up after gaining experience
     }
 
     // Level up the player if enough experience is gained
-    public void levelUp() {
+    void levelUp () {
         if (experience >= 100) {
             level++;
             experience -= 100;

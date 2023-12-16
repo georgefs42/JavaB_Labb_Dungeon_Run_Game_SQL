@@ -15,9 +15,20 @@ public class Main {
 
         System.out.print(Colors.YELLOW_BOLD + "Enter your name: " + Colors.RESET);
         String playerName = scanner.nextLine();
-        Player player = new Player(playerName, dbConnector);
+        Player player = new Player(playerName, dbConnector) {
+            @Override
+            public void attack (Combatant target) {
 
-       // OutputFile outputFile = new OutputFile("OutputFile.txt", dbConnector);
+            }
+
+            @Override
+            public String getMonsterStatusAsString () {
+                return null;
+            }
+        };
+
+
+        // OutputFile outputFile = new OutputFile("OutputFile.txt", dbConnector);
 
         while (true) {
             player.act();

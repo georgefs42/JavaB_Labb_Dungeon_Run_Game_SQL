@@ -18,7 +18,7 @@ public class OutputFile {
     private void initializeDatabase() {
         try {
             dbConnector.open();
-            String createTableQuery = "CREATE TABLE IF NOT EXISTS output_data (id INT AUTO_INCREMENT PRIMARY KEY, data TEXT)";
+            String createTableQuery = "CREATE TABLE IF NOT EXISTS player, monster (id INT AUTO_INCREMENT PRIMARY KEY, data TEXT)";
             try (PreparedStatement statement = dbConnector.getConnection().prepareStatement(createTableQuery)) {
                 statement.executeUpdate();
             }
@@ -27,13 +27,4 @@ public class OutputFile {
         }
     }
 
-    // Get and store the status data
-    public void getStatus(String status) {
-        dbConnector.writeToPlayer(status);
-    }
-
-    // Write status data to both the database and a file
-    private void writeToPlayer(String data) {
-        dbConnector.writeToPlayer(data);
-}
 }

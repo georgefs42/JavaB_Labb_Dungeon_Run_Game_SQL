@@ -10,4 +10,6 @@ public interface Combatant {
 
     // Method to calculate the damage dealt by an entity
     int calculateDamage();
+
+    String getMonsterStatusAsString ();
 }

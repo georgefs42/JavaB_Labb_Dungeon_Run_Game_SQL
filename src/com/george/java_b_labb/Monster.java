@@ -15,17 +15,6 @@ public class Monster implements Combatant {
         this.dbConnector = dbConnector;
     }
 
-    // Get and store the status data
-    public void getStatus(OutputFile outputFile) {
-        String monsterStatus = getMonsterStatusAsString();
-        System.out.println(Colors.PURPLE_BACKGROUND + "=================================");
-        System.out.println(monsterStatus);
-        System.out.println("=================================\n" + Colors.RESET);
-
-        //outputFile.getStatus(monsterStatus);
-       // writeStatusToDatabase(monsterStatus);
-    }
-
     // Monster attacks the target
     public void attack(Combatant target) {
         int damage = calculateDamage();
@@ -50,15 +39,8 @@ public class Monster implements Combatant {
         return strength;
     }
 
-    // Write monster status to the database
-    /*private void writeStatusToDatabase(String status) {
-        dbConnector.open();
-        dbConnector.writeToPlayer(name, strength, intelligence, agility, health, experience, level, baseDamage, gold);
-    }*/
-
-    // Convert monster status to a formatted string
-    private String getMonsterStatusAsString() {
-        // Implement if needed
-        return "";
+    @Override
+    public String getMonsterStatusAsString () {
+        return null;
     }
 }
