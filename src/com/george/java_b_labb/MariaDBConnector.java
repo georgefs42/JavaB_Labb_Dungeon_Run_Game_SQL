@@ -1,14 +1,11 @@
 package com.george.java_b_labb;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class MariaDBConnector {
     private String URL = "jdbc:mariadb://localhost:3306/java_b_labb";
     private String USER = "root";
-    private String password = "**********";
+    private String password = "***********";
     private Connection connection;
 
     // Method to open a database connection
@@ -22,9 +19,9 @@ public class MariaDBConnector {
     }
 
     // Get the database connection object
-public Connection getConnection() {
-    return connection;
-}
+    public Connection getConnection() {
+        return connection;
+    }
 
 /*public class PlayerDatabase {
     // Your existing code for opening a connection goes here...*/
@@ -84,5 +81,53 @@ public Connection getConnection() {
             statement.setInt(6, gold);
             statement.executeUpdate();
         }
+    }
+
+
+    // Method to retrieve player data by name
+    public PlayerData getPlayerData(String playerName) {
+        PlayerData playerData = null;
+        try {
+            open();
+
+            // Retrieve player data from the player table
+            playerData = retrievePlayerData(playerName);
+
+            System.out.println("Player data retrieved successfully.");
+        } catch (SQLException e) {
+            System.out.println("Error retrieving player data: " + e.getMessage());
+        }
+        return playerData;
+    }
+
+    private PlayerData retrievePlayerData(String playerName) throws SQLException {
+        PlayerData playerData = null;
+
+        // Query to retrieve player data by name
+        String selectPlayerQuery = "SELECT * FROM player WHERE name = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(selectPlayerQuery)) {
+            statement.setString(1, playerName);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    // Extract player data from the result set
+                    String name = resultSet.getString("name");
+                    int strength = resultSet.getInt("strength");
+                    int intelligence = resultSet.getInt("intelligence");
+                    int agility = ((ResultSet) resultSet).getInt("agility");
+                    int health = resultSet.getInt("health");
+                    int experience = resultSet.getInt("experience");
+                    int level = resultSet.getInt("level");
+                    int baseDamage = resultSet.getInt("baseDamage");
+                    int gold = resultSet.getInt("gold");
+
+                    // Create a PlayerData object
+                    playerData = new PlayerData(name, strength, intelligence, agility, health, experience, level, baseDamage, gold);
+                }
+            }
+        }
+
+        return playerData;
     }
 }
